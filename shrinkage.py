@@ -26,6 +26,12 @@ def shrinkage_cov_matrix(X, T):
     # Compute estimated shrinkage intensity parameter lambda
     lmbda_est = np.sum(Var) / np.sum((T-S)**2)
 
+    # Restrict shrinkage intensity to interval [0,1]
+    if lmbda_est < 0:
+        lmbda_est = 0
+    elif lmbda_est > 1:
+        lmbda_est = 1
+
     # Compute shrinkage covariance matrix
     C_shrinkage = lmbda_est*T + (1-lmbda_est)*S
 
