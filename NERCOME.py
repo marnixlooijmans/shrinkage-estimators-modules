@@ -77,8 +77,15 @@ def NERCOME(X):
     x_mean_M = np.tile(x_mean, (Ns, 1)).T # Repeat mean values as columns in a Nd x Ns matrix
     Y = X - x_mean_M
 
-    # Consider following values for s according to paper by Lam in 2016
-    s = np.unique(np.rint(np.array([2*np.sqrt(Ns), 0.2*Ns, 0.4*Ns, 0.6*Ns, 0.8*Ns, Ns-2.5*np.sqrt(Ns), Ns-1.5*np.sqrt(Ns)])).astype(int))
+    # Consider following values for s according to paper by Lam in 2016 and Joachimi in 2016
+    s_raw = np.unique(np.rint(np.array([
+        2*np.sqrt(Ns), 0.1*Ns, 0.15*Ns, 0.2*Ns, 0.25*Ns,
+        0.3*Ns, 0.35*Ns, 0.4*Ns, 0.45*Ns, 0.5*Ns, 0.55*Ns,
+        0.6*Ns, 0.65*Ns, 0.7*Ns, 0.75*Ns, 0.8*Ns, 0.85*Ns,
+        0.9*Ns, Ns-2.5*np.sqrt(Ns), Ns-1.5*np.sqrt(Ns)
+    ])).astype(int))
+    # Restrict s to the interval [2, Ns-2]
+    s = np.delete(s_raw, np.concatenate((np.where(s_raw < 2), np.where(s_raw > Ns-2)), axis=None))
     Q = []
     for i in s:
         Q.append(Q_func(i, Y)[0])
