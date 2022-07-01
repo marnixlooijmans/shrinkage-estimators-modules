@@ -14,7 +14,7 @@ def Q_func(s, X):
     # to the maximum number of averaging that we want to do
     nr_col_combos = np.math.factorial(Ns) // (np.math.factorial(s) * np.math.factorial(Ns-s))
     Nav_max = 1000 # SHOULD THIS DEPEND ON VALUE FOR Nd??
-    Nav = np.amin([nr_col_combos, Nav_max]) # Take the mimimum of the two
+    Nav = int(np.amin([nr_col_combos, Nav_max])) # Take the mimimum of the two
 
     if Nav < nr_col_combos:
         # Fill a matrix with zeros and populate it with random column indices
